@@ -1,0 +1,12 @@
+.venv/
+external/
+runs/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.autolean_tmp/
+.lake/
+lake-packages/
+.env
+results/*-raw/
+

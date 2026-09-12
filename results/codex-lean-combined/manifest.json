@@ -1,0 +1,202 @@
+[
+  {
+    "problem_id": "minif2f_mathd_algebra_182",
+    "source": "minif2f",
+    "model": "gpt-6-astra",
+    "namespace": "Eval_gpt_6_astra",
+    "start_line": 6,
+    "proof": "by\n  ring"
+  },
+  {
+    "problem_id": "minif2f_mathd_algebra_182",
+    "source": "minif2f",
+    "model": "gpt-5.6-sol",
+    "namespace": "Eval_gpt_5_6_sol",
+    "start_line": 10,
+    "proof": "by\n  ring"
+  },
+  {
+    "problem_id": "minif2f_mathd_algebra_182",
+    "source": "minif2f",
+    "model": "gpt-5.6-terra",
+    "namespace": "Eval_gpt_5_6_terra",
+    "start_line": 14,
+    "proof": "by\n  simp only [answer]\n  ring"
+  },
+  {
+    "problem_id": "minif2f_mathd_algebra_182",
+    "source": "minif2f",
+    "model": "gpt-5.6-luna",
+    "namespace": "Eval_gpt_5_6_luna",
+    "start_line": 18,
+    "proof": "by ring"
+  },
+  {
+    "problem_id": "minif2f_mathd_algebra_182",
+    "source": "minif2f",
+    "model": "gpt-5.5",
+    "namespace": "Eval_gpt_5_5",
+    "start_line": 22,
+    "proof": "by\n  ring"
+  },
+  {
+    "problem_id": "proofnet_2_Artin_exercise_2_4_19",
+    "source": "proofnet_verified",
+    "model": "gpt-6-astra",
+    "namespace": "Eval_gpt_6_astra",
+    "start_line": 4,
+    "proof": "by\n  apply Subgroup.mem_center_iff.mpr\n  intro y\n  have h : y * x * y⁻¹ = x := hx1 _ (by simpa only [orderOf_conj] using hx)\n  have h' : y * x = x * y := by\n    simpa [mul_assoc] using congrArg (fun z : G => z * y) h\n  first\n  | exact h'\n  | exact h'.symm"
+  },
+  {
+    "problem_id": "proofnet_2_Artin_exercise_2_4_19",
+    "source": "proofnet_verified",
+    "model": "gpt-5.6-sol",
+    "namespace": "Eval_gpt_5_6_sol",
+    "start_line": 8,
+    "proof": "by\n  rw [Subgroup.mem_center_iff]\n  intro y\n  have hy : orderOf (y * x * y⁻¹) = 2 := by\n    simpa only [orderOf_conj] using hx\n  have hconj : y * x * y⁻¹ = x := hx1 _ hy\n  calc\n    x * y = (y * x * y⁻¹) * y := by rw [hconj]\n    _ = y * x := by group"
+  },
+  {
+    "problem_id": "proofnet_2_Artin_exercise_2_4_19",
+    "source": "proofnet_verified",
+    "model": "gpt-5.6-terra",
+    "namespace": "Eval_gpt_5_6_terra",
+    "start_line": 12,
+    "proof": "by\n  rw [mem_center_iff]\n  intro y\n  have h : y * x * y⁻¹ = x := hx1 _ (by simpa using (orderOf_conj y x))\n  calc\n    x * y = (y * x * y⁻¹) * y := by rw [h]\n    _ = y * x := by group"
+  },
+  {
+    "problem_id": "proofnet_2_Artin_exercise_2_4_19",
+    "source": "proofnet_verified",
+    "model": "gpt-5.6-luna",
+    "namespace": "Eval_gpt_5_6_luna",
+    "start_line": 16,
+    "proof": "by\n  change ∀ y, Commute x y\n  intro y\n  have horder : orderOf (y * x * y⁻¹) = 2 := by\n    simpa only [orderOf_conj] using hx\n  have hconj : y * x * y⁻¹ = x := hx1 _ horder\n  apply Commute.mk\n  calc\n    x * y = (y * x * y⁻¹) * y := by group\n    _ = y * x := by rw [hconj]"
+  },
+  {
+    "problem_id": "proofnet_2_Artin_exercise_2_4_19",
+    "source": "proofnet_verified",
+    "model": "gpt-5.5",
+    "namespace": "Eval_gpt_5_5",
+    "start_line": 20,
+    "proof": "by\n  rw [mem_center_iff]\n  intro g\n  have h : g * x * g⁻¹ = x := by\n    apply hx1\n    simpa [hx] using (orderOf_conj x g)\n  calc\n    g * x = (g * x * g⁻¹) * g := by simp [mul_assoc]\n    _ = x * g := by rw [h]"
+  },
+  {
+    "problem_id": "putnambench_putnam_1962_a6",
+    "source": "putnambench",
+    "model": "gpt-6-astra",
+    "namespace": "Eval_gpt_6_astra",
+    "start_line": 4,
+    "proof": "by\n  have hzero : (0 : ℚ) ∉ S := by\n    intro h\n    exact (hScond 0).2.2.1 ⟨h, rfl⟩\n  have hone : (1 : ℚ) ∈ S := by\n    rcases (hScond 1).1 with h | h | h\n    · exact h\n    · have := hSprod (-1) h (-1) h\n      norm_num at this\n      exact this\n    · norm_num at h\n  have hnat : ∀ n : ℕ, 0 < n → (n : ℚ) ∈ S := by\n    intro n\n    induction n with\n    | zero => simp\n    | succ n ih =>\n      intro hn\n      by_cases h : n = 0\n      · subst n\n        simpa using hone\n      · have hn' : 0 < n := Nat.pos_of_ne_zero h\n        simpa only [Nat.cast_add, Nat.cast_one] using\n          hSadd (n : ℚ) (ih hn') 1 hone\n  have hpos : ∀ r : ℚ, 0 < r → r ∈ S := by\n    intro r hr\n    have hd : (0 : ℚ) < (r.den : ℚ) := by\n      exact_mod_cast r.den_pos\n    have hrepr : (r.num : ℚ) / (r.den : ℚ) = r := by\n      first\n      | exact Rat.num_div_den r\n      | exact Rat.num_den r\n    have heq : (r.num : ℚ) = r * (r.den : ℚ) :=\n      (div_eq_iff (ne_of_gt hd)).mp hrepr\n    have hnum : (0 : ℚ) < (r.num : ℚ) := by\n      rw [heq]\n      exact mul_pos hr hd\n    have hi : 0 ≤ r.num := by\n      exact_mod_cast (le_of_lt hnum)\n    have hc : (r.num.toNat : ℚ) = (r.num : ℚ) := by\n      exact_mod_cast (Int.toNat_of_nonneg hi)\n    have hn : 0 < r.num.toNat := by\n      have : (0 : ℚ) < (r.num.toNat : ℚ) := by\n        rw [hc]\n        exact hnum\n      exact_mod_cast this\n    have hnumS : (r.num : ℚ) ∈ S := by\n      rw [← hc]\n      exact hnat _ hn\n    rcases (hScond r).1 with h | h | h\n    · exact h\n    · have hdS : (r.den : ℚ) ∈ S := hnat _ r.den_pos\n      have hneg : -(r.num : ℚ) ∈ S := by\n        have hm := hSprod (-r) h (r.den : ℚ) hdS\n        simpa only [neg_mul, ← heq] using hm\n      exact False.elim ((hScond (r.num : ℚ)).2.1 ⟨hnumS, hneg⟩)\n    · subst r\n      norm_num at hr\n  apply Set.ext\n  intro r\n  change r ∈ S ↔ 0 < r\n  constructor\n  · intro hr\n    by_contra h\n    have hle : r ≤ 0 := le_of_not_gt h\n    rcases lt_or_eq_of_le hle with hlt | heq\n    · exact (hScond r).2.1 ⟨hr, hpos (-r) (neg_pos.mpr hlt)⟩\n    · exact hzero (heq ▸ hr)\n  · exact hpos r"
+  },
+  {
+    "problem_id": "putnambench_putnam_1962_a6",
+    "source": "putnambench",
+    "model": "gpt-5.6-sol",
+    "namespace": "Eval_gpt_5_6_sol",
+    "start_line": 8,
+    "proof": "by\n  have hone : (1 : ℚ) ∈ S := by\n    rcases (hScond 1).1 with h | h | h\n    · exact h\n    · simpa using hSprod (-1) h (-1) h\n    · norm_num at h\n  have hnat : ∀ n : ℕ, 0 < n → (n : ℚ) ∈ S := by\n    have hsucc : ∀ n : ℕ, ((n.succ : ℕ) : ℚ) ∈ S := by\n      intro n\n      induction n with\n      | zero =>\n          simpa using hone\n      | succ n ih =>\n          simpa only [Nat.cast_succ] using\n            hSadd ((n.succ : ℕ) : ℚ) ih 1 hone\n    intro n hn\n    obtain ⟨k, rfl⟩ :=\n      Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hn)\n    exact hsucc k\n  have hpositive : ∀ r : ℚ, 0 < r → r ∈ S := by\n    intro r hr\n    rcases (hScond r).1 with hrs | hnrs | hr0\n    · exact hrs\n    · have hdenpos : (0 : ℚ) < (r.den : ℚ) := by\n        exact_mod_cast r.den_pos\n      have hdenS : (r.den : ℚ) ∈ S :=\n        hnat r.den r.den_pos\n      have hmul : r * (r.den : ℚ) = (r.num : ℚ) := by\n        rw [← r.num_div_den]\n        field_simp [ne_of_gt hdenpos]\n      have hnumQ : (0 : ℚ) < (r.num : ℚ) := by\n        rw [← hmul]\n        exact mul_pos hr hdenpos\n      have hnum : 0 < r.num := by\n        exact_mod_cast hnumQ\n      have hnumeq :\n          ((r.num.toNat : ℕ) : ℚ) = (r.num : ℚ) := by\n        exact_mod_cast Int.toNat_of_nonneg (le_of_lt hnum)\n      have hnumS : (r.num : ℚ) ∈ S := by\n        rw [← hnumeq]\n        exact hnat _ (Int.toNat_pos.mpr hnum)\n      have hnegnumS : -(r.num : ℚ) ∈ S := by\n        have hp := hSprod (-r) hnrs (r.den : ℚ) hdenS\n        simpa [hmul] using hp\n      exact False.elim ((hScond (r.num : ℚ)).2.1 ⟨hnumS, hnegnumS⟩)\n    · linarith\n  ext r\n  constructor\n  · intro hrs\n    by_contra hr\n    rcases lt_or_eq_of_le (le_of_not_gt hr) with hneg | rfl\n    · have hnrs : -r ∈ S := hpositive (-r) (by linarith)\n      exact (hScond r).2.1 ⟨hrs, hnrs⟩\n    · exact (hScond 0).2.2.1 ⟨hrs, rfl⟩\n  · intro hr\n    exact hpositive r hr"
+  },
+  {
+    "problem_id": "putnambench_putnam_1962_a6",
+    "source": "putnambench",
+    "model": "gpt-5.6-terra",
+    "namespace": "Eval_gpt_5_6_terra",
+    "start_line": 12,
+    "proof": "by\n  have h_one : (1 : ℚ) ∈ S := by\n    rcases (hScond 1).1 with h | h | h\n    · exact h\n    · have h' := hSprod (-1) h (-1) h\n      norm_num at h'\n      exact h'\n    · norm_num at h\n  have h_nat : ∀ n : ℕ, 0 < n → (n : ℚ) ∈ S := by\n    intro n hn\n    induction n with\n    | zero => simp at hn\n    | succ n ih =>\n        rcases Nat.eq_zero_or_pos n with rfl | hn\n        · simpa using h_one\n        · simpa [Nat.cast_succ] using hSadd (n : ℚ) (ih hn) 1 h_one\n  have h_inv : ∀ n : ℕ, 0 < n → ((n : ℚ)⁻¹) ∈ S := by\n    intro n hn\n    rcases (hScond ((n : ℚ)⁻¹)).1 with h | h | h\n    · exact h\n    · exfalso\n      apply (hScond (1 : ℚ)).2.1\n      refine ⟨h_one, ?_⟩\n      have h' := hSprod (-(n : ℚ)⁻¹) h (n : ℚ) (h_nat n hn)\n      convert h' using 1\n      field_simp [Nat.cast_ne_zero.mpr (Nat.ne_of_gt hn)]\n    · have hn0 : (n : ℚ) ≠ 0 := by\n        exact_mod_cast Nat.ne_of_gt hn\n      exact (inv_ne_zero hn0 h).elim\n  have hpos : ∀ r : ℚ, 0 < r → r ∈ S := by\n    intro r hr\n    have hdennat : 0 < r.den := Nat.pos_of_ne_zero (Rat.den_nz r)\n    have hden : 0 < (r.den : ℚ) := by\n      exact_mod_cast hdennat\n    have hfrac : 0 < (r.num : ℚ) / (r.den : ℚ) := by\n      simpa only [Rat.num_div_den] using hr\n    have hnum : 0 < (r.num : ℚ) := by\n      rcases (div_pos_iff.mp hfrac) with h | h\n      · exact h.1\n      · linarith\n    have hnum_nat : 0 < r.num.toNat := Int.toNat_pos.mpr hnum\n    have hcast : ((r.num.toNat : ℕ) : ℚ) = (r.num : ℚ) := by\n      have hz : (↑r.num.toNat : ℤ) = r.num :=\n        Int.toNat_of_nonneg (le_of_lt hnum)\n      exact_mod_cast hz\n    have hnum_mem : (r.num : ℚ) ∈ S := by\n      rw [← hcast]\n      exact h_nat r.num.toNat hnum_nat\n    calc\n      r = (r.num : ℚ) / (r.den : ℚ) := (Rat.num_div_den r).symm\n      _ = (r.num : ℚ) * ((r.den : ℚ)⁻¹) := by rw [div_eq_mul_inv]\n      _ ∈ S := hSprod _ hnum_mem _ (h_inv r.den hdennat)\n  ext r\n  simp only [Set.mem_setOf_eq]\n  constructor\n  · intro hr\n    rcases lt_trichotomy r 0 with h | h | h\n    · exfalso\n      apply (hScond r).2.1\n      refine ⟨hr, ?_⟩\n      simpa using hpos (-r) (by linarith)\n    · exact (hScond r).2.2.1 ⟨hr, h⟩ |> False.elim\n    · exact h\n  · exact hpos r"
+  },
+  {
+    "problem_id": "putnambench_putnam_1962_a6",
+    "source": "putnambench",
+    "model": "gpt-5.6-luna",
+    "namespace": "Eval_gpt_5_6_luna",
+    "start_line": 16,
+    "proof": "by\n  obtain ⟨hcase1, hnotboth1, _, _⟩ := hScond (1 : ℚ)\n  have hone : (1 : ℚ) ∈ S := by\n    rcases hcase1 with h | h\n    · exact h\n    · rcases h with h | h\n      · have hs : ((-1 : ℚ) * (-1)) ∈ S := hSprod _ h _ h\n        simpa using hs\n      · norm_num at h\n  have hnat : ∀ n : ℕ, 0 < n → (n : ℚ) ∈ S := by\n    intro n\n    induction n with\n    | zero =>\n        intro hn\n        omega\n    | succ n ih =>\n        intro _\n        by_cases hn0 : n = 0\n        · subst n\n          simpa using hone\n        · have hprev : 0 < n := by omega\n          have hs := hSadd _ (ih hprev) _ hone\n          simpa [Nat.cast_succ] using hs\n  have hpos : ∀ q : ℚ, 0 < q → q ∈ S := by\n    intro q hq\n    have hdenQ : (0 : ℚ) < (q.den : ℚ) := by\n      exact_mod_cast q.den_pos\n    have hnumQ : (0 : ℚ) < (q.num : ℚ) := by\n      have hmul : (q.num : ℚ) = q * (q.den : ℚ) := by\n        calc\n          (q.num : ℚ) = ((q.num : ℚ) / (q.den : ℚ)) * (q.den : ℚ) := by\n            field_simp [ne_of_gt hdenQ]\n          _ = q * (q.den : ℚ) := by rw [q.num_div_den]\n      nlinarith [mul_pos hq hdenQ]\n    have hnumInt : 0 < q.num := by\n      exact_mod_cast hnumQ\n    have hnumCast : (q.num.toNat : ℚ) = (q.num : ℚ) := by\n      have hz : (q.num.toNat : ℤ) = q.num :=\n        Int.toNat_of_nonneg (le_of_lt hnumInt)\n      exact_mod_cast hz\n    have hnumS : (q.num : ℚ) ∈ S := by\n      have hs := hnat q.num.toNat (by exact_mod_cast hnumQ)\n      rw [hnumCast] at hs\n      exact hs\n    have hdenS : (q.den : ℚ) ∈ S := hnat q.den q.den_pos\n    have hinvS : (q.den : ℚ)⁻¹ ∈ S := by\n      let d : ℚ := q.den\n      have hdpos : 0 < d := by\n        exact_mod_cast q.den_pos\n      have hdS : d ∈ S := by\n        simpa [d] using hdenS\n      have hinvne : d⁻¹ ≠ 0 := inv_ne_zero (ne_of_gt hdpos)\n      rcases (hScond (d⁻¹)).1 with hi | hneg | hzero\n      · simpa [d] using hi\n      · have hprod : d * (-(d⁻¹)) ∈ S := hSprod _ hdS _ hneg\n        have heq : d * (-(d⁻¹)) = (-1 : ℚ) := by\n          field_simp [ne_of_gt hdpos]\n        rw [heq] at hprod\n        exact (hnotboth1 ⟨hone, hprod⟩).elim\n      · exact (hinvne hzero).elim\n    have heq : q = (q.num : ℚ) * (q.den : ℚ)⁻¹ := by\n      rw [← q.num_div_den]\n      field_simp [ne_of_gt hdenQ]\n    rw [heq]\n    exact hSprod _ hnumS _ hinvS\n  apply Set.ext\n  intro x\n  simp only [Set.mem_setOf_eq]\n  constructor\n  · intro hx\n    by_contra hnot\n    have hxle : x ≤ 0 := le_of_not_gt hnot\n    have hxne : x ≠ 0 := by\n      intro hz\n      obtain ⟨_, _, hnotzero, _⟩ := hScond x\n      exact hnotzero ⟨hx, hz⟩\n    have hxlt : x < 0 := lt_of_le_of_ne hxle hxne\n    have hnegS := hpos (-x) (neg_pos.mpr hxlt)\n    obtain ⟨_, hnotboth, _, _⟩ := hScond x\n    exact hnotboth ⟨hx, hnegS⟩\n  · exact hpos x)"
+  },
+  {
+    "problem_id": "putnambench_putnam_1962_a6",
+    "source": "putnambench",
+    "model": "gpt-5.5",
+    "namespace": "Eval_gpt_5_5",
+    "start_line": 20,
+    "proof": "by\n  ext r\n  constructor\n  · intro hr\n    by_contra h\n    have hz : r = 0 ∨ r < 0 := by linarith\n    rcases hz with rfl | hrneg\n    · exact (hScond 0).2.2.1 ⟨hr, rfl⟩\n    · have hpos : -r ∈ S := by\n        have htr := (hScond (-r)).1\n        rcases htr with h1 | h2 | h3\n        · simpa using h1\n        · exfalso\n          have : r ∈ S := by simpa using h2\n          exact (hScond r).2.1 ⟨hr, this⟩\n        · linarith\n      exact (hScond r).2.1 ⟨hr, hpos⟩\n  · intro hrpos\n    have hzero_not : 0 ∉ S := by\n      intro h0\n      exact (hScond 0).2.2.1 ⟨h0, rfl⟩\n    have hOne : (1 : ℚ) ∈ S := by\n      have htr := (hScond (1 : ℚ)).1\n      rcases htr with h1 | hm1 | hzero\n      · exact h1\n      · exfalso\n        have h1' : (1 : ℚ) ∈ S := by\n          have := hSprod (-1) hm1 (-1) hm1\n          simpa using this\n        have h0 : (0 : ℚ) ∈ S := by\n          have := hSadd (-1) hm1 1 h1'\n          simpa using this\n        exact hzero_not h0\n      · norm_num at hzero\n    have hnat : ∀ n : ℕ, 0 < n → ((n : ℚ) ∈ S) := by\n      intro n hn\n      induction' n with n ih\n      · norm_num at hn\n      · cases n with\n        | zero =>\n            simpa using hOne\n        | succ n =>\n            have hsucc : (0 : ℕ) < Nat.succ n := Nat.succ_pos n\n            have hnS : ((Nat.succ n : ℚ) ∈ S) := ih hsucc\n            have := hSadd (Nat.succ n : ℚ) hnS 1 hOne\n            norm_num at this\n            simpa [Nat.cast_add, Nat.cast_one, add_comm, add_left_comm, add_assoc] using this\n    obtain ⟨m, n, hn, hmn⟩ := Rat.exists_eq_num_div_den r\n    have hnpos : (0 : ℚ) < n := by exact_mod_cast n.pos\n    have hnS : ((n : ℚ) ∈ S) := hnat n (Nat.pos_of_ne_zero hn)\n    have hmpos : (0 : ℚ) < m := by\n      rw [hmn] at hrpos\n      positivity\n    have hm_nat_pos : 0 < m.natAbs := Int.natAbs_pos.mpr (by linarith)\n    have hmS : ((m.natAbs : ℚ) ∈ S) := hnat m.natAbs hm_nat_pos\n    have hmS' : ((m : ℚ) ∈ S) := by\n      have : m = (m.natAbs : ℤ) := Int.eq_natAbs_of_zero_le (by linarith)\n      simpa [this] using hmS\n    have htr := (hScond r).1\n    rcases htr with hrS | hnrS | hz\n    · exact hrS\n    · exfalso\n      have hprod : ((n : ℚ) * (-r) ∈ S) := hSprod (n : ℚ) hnS (-r) hnrS\n      have hnegm : (-(m : ℚ) ∈ S) := by\n        rw [hmn] at hprod\n        field_simp [show (n : ℚ) ≠ 0 by exact_mod_cast hn] at hprod\n        simpa [mul_comm, mul_left_comm, mul_assoc] using hprod\n      have h0 : (0 : ℚ) ∈ S := by\n        have := hSadd (m : ℚ) hmS' (-(m : ℚ)) hnegm\n        simpa using this\n      exact hzero_not h0\n    · linarith"
+  },
+  {
+    "problem_id": "minif2f_amc12a_2015_p10",
+    "source": "minif2f",
+    "model": "gpt-6-astra",
+    "namespace": "Eval_gpt_6_astra",
+    "start_line": 6,
+    "proof": "by\n  change x = 26\n  have hy : y ≤ 8 := by\n    by_contra h\n    have hy9 : 9 ≤ y := by omega\n    have hx10 : 10 ≤ x := by omega\n    nlinarith [mul_nonneg (show 0 ≤ x - 10 by omega)\n      (show 0 ≤ y - 9 by omega)]\n  interval_cases y <;> norm_num at h₂ <;> omega"
+  },
+  {
+    "problem_id": "minif2f_amc12a_2015_p10",
+    "source": "minif2f",
+    "model": "gpt-5.6-sol",
+    "namespace": "Eval_gpt_5_6_sol",
+    "start_line": 10,
+    "proof": "by\n  have hy : y ≤ 8 := by\n    by_contra h\n    have hy8 : 8 < y := lt_of_not_ge h\n    have hp : 0 < (x - y) * y :=\n      mul_pos (sub_pos.mpr h₁) h₀\n    have hq : 0 < (y - 8) * (y + 10) :=\n      mul_pos (by omega) (by omega)\n    nlinarith\n  interval_cases y <;> norm_num at h₂ ⊢ <;> omega"
+  },
+  {
+    "problem_id": "minif2f_amc12a_2015_p10",
+    "source": "minif2f",
+    "model": "gpt-5.6-terra",
+    "namespace": "Eval_gpt_5_6_terra",
+    "start_line": 14,
+    "proof": "by\n  have h := mul_nonneg (show 0 ≤ x - y - 1 by omega) (show 0 ≤ y + 1 by omega)\n  have hy : y ≤ 7 := by\n    nlinarith\n  interval_cases y <;> norm_num at h₀ h₁ h₂ ⊢ <;> omega"
+  },
+  {
+    "problem_id": "minif2f_amc12a_2015_p10",
+    "source": "minif2f",
+    "model": "gpt-5.6-luna",
+    "namespace": "Eval_gpt_5_6_luna",
+    "start_line": 18,
+    "proof": "by\n  change x = 26\n  have hlt : y + 1 ≤ x := by omega\n  have hxy : y * (y + 1) ≤ x * y :=\n    mul_le_mul_of_nonneg_right hlt (le_of_lt h₀)\n  have hy7 : y ≤ 7 := by\n    by_contra h\n    have hy8 : 8 ≤ y := by omega\n    have hs : 0 ≤ (y - 8) * (y - 8) := mul_self_nonneg _\n    nlinarith [hxy, hs]\n  interval_cases y <;> norm_num at * <;> omega"
+  },
+  {
+    "problem_id": "minif2f_amc12a_2015_p10",
+    "source": "minif2f",
+    "model": "gpt-5.5",
+    "namespace": "Eval_gpt_5_5",
+    "start_line": 22,
+    "proof": "by\n  omega"
+  },
+  {
+    "problem_id": "proofnet_1_Artin_exercise_2_2_9",
+    "source": "proofnet_verified",
+    "model": "gpt-6-astra",
+    "namespace": "Eval_gpt_6_astra",
+    "start_line": 4,
+    "proof": "by\n  have aux (c : G) (ha : Commute c a) (hb : Commute c b) :\n      ∀ z ∈ Subgroup.closure {x : G | x = a ∨ x = b}, Commute c z := by\n    intro z hz\n    induction hz using Subgroup.closure_induction with\n    | mem z hz =>\n        rcases hz with rfl | rfl\n        · exact ha\n        · exact hb\n    | one =>\n        show c * 1 = 1 * c\n        simp\n    | mul z w hz hw ihz ihw =>\n        exact ihz.mul_right ihw\n    | inv z hz ih =>\n        exact ih.inv_right\n  intro x y\n  have hab : Commute a b := h\n  have hxa : Commute (x : G) a :=\n    (aux a (Commute.refl a) hab x x.property).symm\n  have hxb : Commute (x : G) b :=\n    (aux b hab.symm (Commute.refl b) x x.property).symm\n  apply Subtype.ext\n  exact (aux (x : G) hxa hxb y y.property).eq"
+  },
+  {
+    "problem_id": "proofnet_1_Artin_exercise_2_2_9",
+    "source": "proofnet_verified",
+    "model": "gpt-5.6-sol",
+    "namespace": "Eval_gpt_5_6_sol",
+    "start_line": 8,
+    "proof": "by\n  intro x y\n  apply Subtype.ext\n  change Commute (x : G) (y : G)\n  refine Subgroup.closure_induction x.property ?_ ?_ ?_ ?_\n  · intro z hz\n    refine Subgroup.closure_induction y.property ?_ ?_ ?_ ?_\n    · intro w hw\n      rcases hz with (rfl | rfl) <;> rcases hw with (rfl | rfl)\n      · exact Commute.refl _\n      · exact h\n      · exact h.symm\n      · exact Commute.refl _\n    · exact Commute.one_right _\n    · intro u v hu hv\n      exact hu.mul_right hv\n    · intro u hu\n      exact hu.inv_right\n  · exact Commute.one_left _\n  · intro u v hu hv\n    exact hu.mul_left hv\n  · intro u hu\n    exact hu.inv_left"
+  },
+  {
+    "problem_id": "proofnet_1_Artin_exercise_2_2_9",
+    "source": "proofnet_verified",
+    "model": "gpt-5.6-terra",
+    "namespace": "Eval_gpt_5_6_terra",
+    "start_line": 12,
+    "proof": "by\n  intro x hx y hy\n  have hgen : ∀ g ∈ ({x | x = a ∨ x = b} : Set G),\n      ∀ z ∈ closure {x | x = a ∨ x = b}, Commute g z := by\n    intro g hg z hz\n    refine Subgroup.closure_induction ?_ ?_ ?_ ?_ hz\n    · intro w hw\n      rcases hg with (rfl | rfl) <;> rcases hw with (rfl | rfl)\n      · exact Commute.refl a\n      · exact h\n      · exact h.symm\n      · exact Commute.refl b\n    · exact Commute.one_right g\n    · intro u v hu hv\n      exact hu.mul_right hv\n    · intro u hu\n      exact hu.inv_right\n  have hxy : Commute x y := by\n    refine Subgroup.closure_induction ?_ ?_ ?_ ?_ hx\n    · intro g hg\n      exact hgen g hg y hy\n    · exact Commute.one_left y\n    · intro u v hu hv\n      exact hu.mul_left hv\n    · intro u hu\n      exact hu.inv_left\n  exact hxy.eq"
+  },
+  {
+    "problem_id": "proofnet_1_Artin_exercise_2_2_9",
+    "source": "proofnet_verified",
+    "model": "gpt-5.6-luna",
+    "namespace": "Eval_gpt_5_6_luna",
+    "start_line": 16,
+    "proof": "by\n  let S : Set G := {z | z = a ∨ z = b}\n  let K : Subgroup G := Subgroup.closure S\n  have gen_comm : ∀ g, g ∈ S → ∀ y, y ∈ K → g * y = y * g := by\n    intro g hg y hy\n    change g = a ∨ g = b at hg\n    refine Subgroup.closure_induction (p := fun z => g * z = z * g) hy ?_ ?_ ?_ ?_\n    · simp\n    · intro u v hu hv\n      calc\n        g * (u * v) = (g * u) * v := by rw [mul_assoc]\n        _ = (u * g) * v := by rw [hu]\n        _ = u * (g * v) := by rw [mul_assoc]\n        _ = u * (v * g) := by rw [hv]\n        _ = (u * v) * g := by rw [mul_assoc]\n    · intro u hu\n      calc\n        g * u⁻¹ = u⁻¹ * (u * g) * u⁻¹ := by group\n        _ = u⁻¹ * (g * u) * u⁻¹ := by rw [hu.symm]\n        _ = u⁻¹ * g := by group\n    · intro z hz\n      change z = a ∨ z = b at hz\n      rcases hg with rfl | rfl <;> rcases hz with rfl | rfl\n      · rfl\n      · exact h\n      · exact h.symm\n      · rfl\n  intro x y\n  change (x : G) * (y : G) = (y : G) * (x : G)\n  refine Subgroup.closure_induction\n    (p := fun u => ∀ z, z ∈ K → u * z = z * u) x.property ?_ ?_ ?_ ?_\n  · intro z hz\n    simp\n  · intro u v hu hv z hz\n    calc\n      (u * v) * z = u * (v * z) := by rw [mul_assoc]\n      _ = u * (z * v) := by rw [hv z hz]\n      _ = (u * z) * v := by rw [← mul_assoc]\n      _ = (z * u) * v := by rw [hu z hz]\n      _ = z * (u * v) := by rw [mul_assoc]\n  · intro u hu z hz\n    calc\n      u⁻¹ * z = u⁻¹ * (z * u) * u⁻¹ := by group\n      _ = u⁻¹ * (u * z) * u⁻¹ := by rw [← hu z hz]\n      _ = z * u⁻¹ := by group\n  · intro u hu z hz\n    exact gen_comm u hu z hz"
+  },
+  {
+    "problem_id": "proofnet_1_Artin_exercise_2_2_9",
+    "source": "proofnet_verified",
+    "model": "gpt-5.5",
+    "namespace": "Eval_gpt_5_5",
+    "start_line": 20,
+    "proof": "by\n  intro x y\n  exact Subgroup.closure_induction₂ x.property y.property\n    (by\n      intro u hu v hv\n      rcases hu with rfl | rfl <;> rcases hv with rfl | rfl\n      · rfl\n      · exact h\n      · exact h.symm\n      · rfl)\n    (by simp)\n    (by simp)\n    (by\n      intro u v w _ _ huv huw\n      calc\n        u * (v * w) = (u * v) * w := by simp [mul_assoc]\n        _ = (v * u) * w := by rw [huv]\n        _ = v * (u * w) := by simp [mul_assoc]\n        _ = v * (w * u) := by rw [huw]\n        _ = (v * w) * u := by simp [mul_assoc])\n    (by\n      intro u v w _ _ huv huw\n      calc\n        (u * v) * w = u * (v * w) := by simp [mul_assoc]\n        _ = u * (w * v) := by rw [huw]\n        _ = (u * w) * v := by simp [mul_assoc]\n        _ = (w * u) * v := by rw [huv]\n        _ = w * (u * v) := by simp [mul_assoc])\n    (by\n      intro u v _ huv\n      exact (Commute.eq (Commute.inv_left (Commute.mk huv)))\n    )\n    (by\n      intro u v _ huv\n      exact (Commute.eq (Commute.inv_right (Commute.mk huv)))\n    )"
+  }
+]

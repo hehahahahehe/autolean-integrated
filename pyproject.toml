@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "autolean"
+version = "0.1.0"
+description = "Compiler-guided Lean proof runner for a 30-problem development benchmark"
+requires-python = ">=3.10"
+
+[project.scripts]
+autolean = "autolean.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["autolean*"]
